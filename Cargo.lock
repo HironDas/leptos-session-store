@@ -1275,8 +1275,6 @@ dependencies = [
  "console_error_panic_hook",
  "console_log",
  "http",
- "http-body",
- "http-body-util",
  "lambda_http 0.17.0",
  "leptos",
  "leptos_axum",
