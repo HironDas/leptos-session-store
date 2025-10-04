@@ -11,7 +11,7 @@ use crate::pages::HomePage;
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
         <!DOCTYPE html>
-        <html lang="en" class="h-full bg-gray-100">
+        <html lang="en" class="h-full bg-gray-100 text-gray-800">
             <head>
                 <meta charset="utf-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>

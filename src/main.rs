@@ -1,7 +1,7 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-    use axum::{routing::post, Router};
+    use axum::{ Router, routing::post};
     use leptos::prelude::*;
     use leptos_axum::{generate_route_list, LeptosRoutes, file_and_error_handler};
     use leptos_session_store::{app::*};
@@ -22,7 +22,7 @@ async fn main() {
 
     // build our application with a route
     let app = Router::new()
-        //.route("/api/*fn_name", post(leptos_axum::handle_server_fns))
+        .route("/api/{*path}", post(leptos_axum::handle_server_fns))
         .leptos_routes(&leptos_options, routes, {
             let leptos_options = leptos_options.clone();
             move || shell(leptos_options.clone())
@@ -45,11 +45,13 @@ async fn main() {
     // In release, we use the lambda_http crate
     #[cfg(not(debug_assertions))]
     {
+        use lambda_runtime::{run, service_fn};
+        use aws_lambda_events::encodings::http::Body;
         let app = tower::ServiceBuilder::new()
             .layer(axum_aws_lambda::LambdaLayer::default())
             .service(app);
 
-        lambda_http::run(app).await.unwrap();
+        run(app).await.unwrap();
     }
 }
 
