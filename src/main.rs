@@ -45,8 +45,7 @@ async fn main() {
     // In release, we use the lambda_http crate
     #[cfg(not(debug_assertions))]
     {
-        use lambda_runtime::{run, service_fn};
-        use aws_lambda_events::encodings::http::Body;
+        use lambda_http::{run, service_fn};
         let app = tower::ServiceBuilder::new()
             .layer(axum_aws_lambda::LambdaLayer::default())
             .service(app);
